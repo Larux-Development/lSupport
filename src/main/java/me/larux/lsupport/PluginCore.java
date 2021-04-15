@@ -1,4 +1,4 @@
-package me.raider.isupport;
+package me.larux.lsupport;
 
 public interface PluginCore {
 }
