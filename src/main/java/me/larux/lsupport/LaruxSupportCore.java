@@ -1,4 +1,13 @@
 package me.larux.lsupport;
 
-public class LaruxSupportCore {
+import me.raider.plib.commons.cmd.CommandManager;
+
+public class LaruxSupportCore implements PluginCore {
+
+
+
+    @Override
+    public CommandManager getCommandManager() {
+        return null;
+    }
 }

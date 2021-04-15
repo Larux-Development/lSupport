@@ -7,8 +7,17 @@ version '1.0-SNAPSHOT'
 
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://jitpack.io'
+        }
+        maven {
+            url "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
     }
+
 }
 
 repositories {
@@ -16,6 +25,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.xRaidersito.p-lib:commons-cmd:162be5c94c'
+    implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:284653e349'
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
