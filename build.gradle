@@ -5,10 +5,17 @@ plugins {
 group 'me.raider'
 version '1.0-SNAPSHOT'
 
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation 'com.github.xRaidersito.p-lib:commons-cmd:162be5c94c'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
