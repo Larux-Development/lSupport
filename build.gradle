@@ -26,6 +26,7 @@ repositories {
 
 dependencies {
     implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:284653e349'
+    implementation 'com.github.xRaidersito.p-lib:commons-storage:924af599f5'
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
