@@ -5,6 +5,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -12,12 +13,12 @@ public class FileCreator extends YamlConfiguration {
 
     private final String fileName;
     private final Plugin plugin;
-    private final java.io.File file;
+    private final File file;
 
-    public FileCreator(Plugin plugin, String filename, String fileExtension, java.io.File folder){
+    public FileCreator(Plugin plugin, String filename, String fileExtension, File folder){
         this.plugin = plugin;
         this.fileName = filename + (filename.endsWith(fileExtension) ? "" : fileExtension);
-        this.file = new java.io.File(folder, this.fileName);
+        this.file = new File(folder, this.fileName);
         this.createFile();
     }
 

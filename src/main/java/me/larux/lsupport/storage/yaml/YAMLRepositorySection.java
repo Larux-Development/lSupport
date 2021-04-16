@@ -5,10 +5,8 @@ import me.raider.plib.commons.serializer.repository.RepositoryPath;
 import me.raider.plib.commons.serializer.repository.RepositorySection;
 
 import java.util.List;
-import java.util.Map;
 
 public class YAMLRepositorySection implements RepositorySection<FileCreator> {
-
 
     private final FileCreator file;
     private final List<String> path;
