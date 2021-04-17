@@ -21,14 +21,18 @@ public class SupportCommand implements PLibCommand {
 
     @Command(name = "admin partners")
     public void runAdminCommand(@Injected Player player, String name) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
-        Partner partner = core.getStorage().load(offlinePlayer.getUniqueId().toString(), true, false);
-        if (partner!=null) {
-            player.sendMessage("partner existe");
+        if (!player.hasPermission("lsupport.admin")) {
+            player.sendMessage(core.getLang().getString("messages.no-perm"));
             return;
         }
-        System.out.println(core.getStorage().get());
-        player.sendMessage("partner creado correctamente");
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+        Partner partner = core.getStorage().load(offlinePlayer.getUniqueId().toString(), true, false);
+
+        if (partner!=null) {
+            player.sendMessage(core.getLang().getString("error-partner-exist"));
+            return;
+        }
+        player.sendMessage(core.getLang().getString("messages.admin.success-creating-partner"));
     }
 
     @Default

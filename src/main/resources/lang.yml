@@ -1,0 +1,5 @@
+messages:
+  no-perm: "&cYou don't have permission to use this command."
+  admin:
+    success-creating-partner: "&aPartner created successfully."
+    error-partner-exist: "&cThe partner already exist."

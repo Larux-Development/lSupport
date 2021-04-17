@@ -28,6 +28,8 @@ public class LaruxSupportCore implements PluginCore {
     private final LaruxSupportPlugin plugin;
 
     private FileCreator config;
+    private FileCreator lang;
+
     private StorageInitializer storageInitializer;
     private CommandManager commandManager;
 
@@ -59,6 +61,11 @@ public class LaruxSupportCore implements PluginCore {
     }
 
     @Override
+    public FileCreator getLang() {
+        return lang;
+    }
+
+    @Override
     public StorageInitializer getStorageInitializer() {
         return storageInitializer;
     }
@@ -78,6 +85,7 @@ public class LaruxSupportCore implements PluginCore {
         commandManager = new BukkitCommandManager();
         storageInitializer = new StorageInitializer(serializerInitializer, EXECUTOR_SERVICE);
         config = new FileCreator(plugin, "config");
+        lang = new FileCreator(plugin, "lang");
     }
 
     private void initCommand() {
@@ -103,7 +111,7 @@ public class LaruxSupportCore implements PluginCore {
             count++;
         }
         getStorage().loadAll(fileNames.toArray(new String[0]));
-        Bukkit.getLogger().info("Loaded " + count + " collectors successfully!");
+        Bukkit.getLogger().info("Loaded " + count + " partners successfully!");
     }
 
     private void savePartners() {

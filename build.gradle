@@ -39,10 +39,10 @@ repositories {
 dependencies {
     implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:283e7be02f'
     shadow 'com.github.xRaidersito.p-lib:bukkit-cmd:283e7be02f'
-    implementation 'com.github.xRaidersito.p-lib:commons-storage:5914d74407'
-    shadow 'com.github.xRaidersito.p-lib:commons-storage:5914d74407'
-    implementation 'com.github.xRaidersito.p-lib:commons-serializer:5914d74407'
-    shadow 'com.github.xRaidersito.p-lib:commons-serializer:5914d74407'
+    implementation 'com.github.xRaidersito.p-lib:commons-storage:012756eeaf'
+    shadow 'com.github.xRaidersito.p-lib:commons-storage:012756eeaf'
+    implementation 'com.github.xRaidersito.p-lib:commons-serializer:012756eeaf'
+    shadow 'com.github.xRaidersito.p-lib:commons-serializer:012756eeaf'
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

@@ -16,6 +16,8 @@ public interface PluginCore {
 
     FileCreator getConfig();
 
+    FileCreator getLang();
+
     StorageInitializer getStorageInitializer();
 
     CommandManager getCommandManager();
