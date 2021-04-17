@@ -27,6 +27,7 @@ public class SupportCommand implements PLibCommand {
             player.sendMessage("partner existe");
             return;
         }
+        System.out.println(core.getStorage().get());
         player.sendMessage("partner creado correctamente");
     }
 

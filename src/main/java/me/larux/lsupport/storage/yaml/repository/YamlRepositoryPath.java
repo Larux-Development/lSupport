@@ -20,6 +20,7 @@ public class YamlRepositoryPath implements RepositoryPath<FileCreator> {
     @Override
     public <T> void set(String s, T t) {
         section.getRepository().set(buildPath(s), t);
+        section.getRepository().save();
     }
 
     @Override

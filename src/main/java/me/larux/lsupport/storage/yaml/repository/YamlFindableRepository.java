@@ -21,6 +21,9 @@ public class YamlFindableRepository implements FindableRepository<FileCreator> {
         FileCreator file = new FileCreator(plugin, s, ".yml",
                 new File(plugin.getDataFolder().getAbsolutePath() + "/data/"));
 
-        return new YamlRepositorySection(file, new ArrayList<>(), null);
+        RepositorySection<FileCreator> section = new YamlRepositorySection(file, new ArrayList<>(), null);
+        section.setRepositoryPath(new YamlRepositoryPath(section));
+
+        return section;
     }
 }

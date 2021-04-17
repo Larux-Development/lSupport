@@ -37,12 +37,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:64c1a18540'
-    shadow 'com.github.xRaidersito.p-lib:bukkit-cmd:64c1a18540'
-    implementation 'com.github.xRaidersito.p-lib:commons-storage:64c1a18540'
-    shadow 'com.github.xRaidersito.p-lib:commons-storage:64c1a18540'
-    implementation 'com.github.xRaidersito.p-lib:commons-serializer:64c1a18540'
-    shadow 'com.github.xRaidersito.p-lib:commons-serializer:64c1a18540'
+    implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:283e7be02f'
+    shadow 'com.github.xRaidersito.p-lib:bukkit-cmd:283e7be02f'
+    implementation 'com.github.xRaidersito.p-lib:commons-storage:5914d74407'
+    shadow 'com.github.xRaidersito.p-lib:commons-storage:5914d74407'
+    implementation 'com.github.xRaidersito.p-lib:commons-serializer:5914d74407'
+    shadow 'com.github.xRaidersito.p-lib:commons-serializer:5914d74407'
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
