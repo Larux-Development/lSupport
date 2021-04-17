@@ -1,14 +1,14 @@
-package me.larux.lsupport.storage.yaml;
+package me.larux.lsupport.storage.yaml.repository;
 
 import me.larux.lsupport.file.FileCreator;
 import me.raider.plib.commons.serializer.repository.RepositoryPath;
 import me.raider.plib.commons.serializer.repository.RepositorySection;
 
-public class YAMLRepositoryPath implements RepositoryPath<FileCreator> {
+public class YamlRepositoryPath implements RepositoryPath<FileCreator> {
 
     private final RepositorySection<FileCreator> section;
 
-    public YAMLRepositoryPath(RepositorySection<FileCreator> section) {
+    public YamlRepositoryPath(RepositorySection<FileCreator> section) {
         this.section = section;
     }
 

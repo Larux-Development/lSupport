@@ -1,4 +1,4 @@
-package me.larux.lsupport.storage.yaml;
+package me.larux.lsupport.storage.yaml.repository;
 
 import me.larux.lsupport.file.FileCreator;
 import me.raider.plib.commons.serializer.repository.RepositoryPath;
@@ -6,7 +6,7 @@ import me.raider.plib.commons.serializer.repository.RepositorySection;
 
 import java.util.List;
 
-public class YAMLRepositorySection implements RepositorySection<FileCreator> {
+public class YamlRepositorySection implements RepositorySection<FileCreator> {
 
     private final FileCreator file;
     private final List<String> path;
@@ -14,16 +14,16 @@ public class YAMLRepositorySection implements RepositorySection<FileCreator> {
     private RepositoryPath<FileCreator> repositoryPath;
     private final RepositorySection<FileCreator> root;
 
-    public YAMLRepositorySection(FileCreator file, List<String> path,
-                                    RepositoryPath<FileCreator> repositoryPath,
-                                    RepositorySection<FileCreator> root) {
+    public YamlRepositorySection(FileCreator file, List<String> path,
+                                 RepositoryPath<FileCreator> repositoryPath,
+                                 RepositorySection<FileCreator> root) {
         this.file = file;
         this.path = path;
         this.repositoryPath = repositoryPath;
         this.root = root;
     }
 
-    public YAMLRepositorySection(FileCreator file, List<String> path,
+    public YamlRepositorySection(FileCreator file, List<String> path,
                                  RepositorySection<FileCreator> root) {
         this.file = file;
         this.path = path;
@@ -44,7 +44,7 @@ public class YAMLRepositorySection implements RepositorySection<FileCreator> {
     public RepositorySection<FileCreator> getChild(String key) {
         List<String> copyList = path;
         copyList.add(key);
-        return new YAMLRepositorySection(file, copyList, repositoryPath, this);
+        return new YamlRepositorySection(file, copyList, repositoryPath, this);
     }
 
     @Override

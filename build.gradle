@@ -1,6 +1,19 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
+    }
+}
+
 plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
     id 'java'
 }
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
 
 group 'me.raider'
 version '1.0-SNAPSHOT'
@@ -17,16 +30,23 @@ allprojects {
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
     }
-
 }
 
 repositories {
     mavenCentral()
 }
 
+shadowJar {
+    exclude 'me.raider'
+}
+
 dependencies {
     implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:284653e349'
-    implementation 'com.github.xRaidersito.p-lib:commons-storage:924af599f5'
+    shadow 'com.github.xRaidersito.p-lib:bukkit-cmd:284653e349'
+    implementation 'com.github.xRaidersito.p-lib:commons-storage:e99c34b71d'
+    shadow 'com.github.xRaidersito.p-lib:commons-storage:e99c34b71d'
+    implementation 'com.github.xRaidersito.p-lib:commons-serializer:e99c34b71d'
+    shadow 'com.github.xRaidersito.p-lib:commons-serializer:e99c34b71d'
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
