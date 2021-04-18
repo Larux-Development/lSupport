@@ -15,6 +15,8 @@ public interface GuiPage extends Nameable {
 
     GuiItem getItemFromSlot(int slot);
 
+    void update();
+
     interface Builder {
 
         Builder slots(int slots);

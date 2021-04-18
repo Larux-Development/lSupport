@@ -1,6 +1,7 @@
 package me.larux.lsupport;
 
 import me.larux.lsupport.file.FileCreator;
+import me.larux.lsupport.gui.GuiHandler;
 import me.larux.lsupport.storage.StorageInitializer;
 import me.larux.lsupport.storage.partner.Partner;
 import me.raider.plib.commons.cmd.CommandManager;
@@ -17,6 +18,10 @@ public interface PluginCore {
     FileCreator getConfig();
 
     FileCreator getLang();
+
+    FileCreator getMenu();
+
+    GuiHandler getGui();
 
     StorageInitializer getStorageInitializer();
 
