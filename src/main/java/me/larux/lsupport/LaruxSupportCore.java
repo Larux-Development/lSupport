@@ -9,6 +9,7 @@ import me.larux.lsupport.gui.GuiListener;
 import me.larux.lsupport.storage.SerializerInitializer;
 import me.larux.lsupport.storage.StorageInitializer;
 import me.larux.lsupport.storage.partner.Partner;
+import me.larux.lsupport.util.Utils;
 import me.raider.plib.bukkit.cmd.BukkitAuthorizer;
 import me.raider.plib.bukkit.cmd.BukkitCommandManager;
 import me.raider.plib.bukkit.cmd.BukkitMessenger;
@@ -126,7 +127,7 @@ public class LaruxSupportCore implements PluginCore {
         int count = 0;
         List<String> fileNames = new ArrayList<>();
         for (File file : new File(plugin.getDataFolder().getAbsolutePath() + "/data/").listFiles()) {
-            fileNames.add(file.getName());
+            fileNames.add(Utils.removeFileExtension(file.getName()));
             count++;
         }
         getStorage().loadAll(fileNames.toArray(new String[0]));

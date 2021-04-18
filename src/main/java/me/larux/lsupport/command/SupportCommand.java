@@ -11,6 +11,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+
 @Command(name = "support")
 public class SupportCommand implements PLibCommand {
 
@@ -40,7 +42,13 @@ public class SupportCommand implements PLibCommand {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
-
+            player.sendMessage(core.getLang().getString("messages.admin.error-deleting-partner"));
+            return;
+        }
+        File file = new File(core.getPlugin().getDataFolder().getAbsolutePath() + "/data/", partner.getId() + ".yml");
+        if (file.delete()) {
+            core.getStorage().get().remove(partner.getId());
+            player.sendMessage(core.getLang().getString("messages.admin.success-deleting-partner"));
         }
     }
 
