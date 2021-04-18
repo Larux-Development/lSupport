@@ -1,7 +1,6 @@
 package me.larux.lsupport.command;
 
 import me.larux.lsupport.LaruxSupportCore;
-import me.larux.lsupport.LaruxSupportPlugin;
 import me.larux.lsupport.menu.LaruxSupportMenu;
 import me.larux.lsupport.storage.object.Partner;
 import me.raider.plib.commons.cmd.PLibCommand;
@@ -19,7 +18,7 @@ import java.io.File;
 public class SupportCommand implements PLibCommand {
 
     private final LaruxSupportCore core;
-
+    
     public SupportCommand(LaruxSupportCore core) {
         this.core = core;
     }
@@ -76,10 +75,21 @@ public class SupportCommand implements PLibCommand {
     		player.sendMessage(core.getLang().getString("messages.admin.success-reload").replaceAll("%file%", "config.yml"));
     	}
     }
-
+    @Command(name = "admin help", permission = "lsupport.admin")
+    public void runHelpCommand(@Injected Player player, String name) {
+    	sendHelpMessage(player);
+    }
     @Default
     public void runSupportCommand(@Injected Player player) {
         new LaruxSupportMenu(core).openMenu(player);
     }
 
+    public void sendHelpMessage(Player player) {
+    	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[&blSupport&6] &aby &cRaider &a& &ctheabdel572&a."));
+    	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aRun &c/support admin help &ato see this message."));
+    	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner add &1- &2Add one player to the partners list."));
+    	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner remove &1- &2Remove one player from the partners list."));
+    	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support reload &1- &2Reload files [config.yml, lang.yml, menu.yml]."));
+    	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin help &1- &2Shows this help message."));
+    }
 }
