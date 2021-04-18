@@ -10,7 +10,7 @@ import me.larux.lsupport.gui.item.SimpleGuiItem;
 import me.larux.lsupport.gui.item.buttom.Button;
 import me.larux.lsupport.gui.item.buttom.NextPageButton;
 import me.larux.lsupport.gui.item.buttom.PreviousPageButton;
-import me.larux.lsupport.storage.partner.Partner;
+import me.larux.lsupport.storage.object.Partner;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

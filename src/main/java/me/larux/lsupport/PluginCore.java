@@ -3,7 +3,7 @@ package me.larux.lsupport;
 import me.larux.lsupport.file.FileCreator;
 import me.larux.lsupport.gui.GuiHandler;
 import me.larux.lsupport.storage.StorageInitializer;
-import me.larux.lsupport.storage.partner.Partner;
+import me.larux.lsupport.storage.object.Partner;
 import me.raider.plib.commons.cmd.CommandManager;
 import me.raider.plib.commons.storage.Storage;
 

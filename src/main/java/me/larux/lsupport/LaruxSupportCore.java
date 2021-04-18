@@ -8,7 +8,7 @@ import me.larux.lsupport.gui.GuiHandler;
 import me.larux.lsupport.gui.GuiListener;
 import me.larux.lsupport.storage.SerializerInitializer;
 import me.larux.lsupport.storage.StorageInitializer;
-import me.larux.lsupport.storage.partner.Partner;
+import me.larux.lsupport.storage.object.Partner;
 import me.larux.lsupport.util.Utils;
 import me.raider.plib.bukkit.cmd.BukkitAuthorizer;
 import me.raider.plib.bukkit.cmd.BukkitCommandManager;

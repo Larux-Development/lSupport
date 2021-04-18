@@ -2,7 +2,7 @@ package me.larux.lsupport.command;
 
 import me.larux.lsupport.LaruxSupportCore;
 import me.larux.lsupport.menu.LaruxSupportMenu;
-import me.larux.lsupport.storage.partner.Partner;
+import me.larux.lsupport.storage.object.Partner;
 import me.raider.plib.commons.cmd.PLibCommand;
 import me.raider.plib.commons.cmd.annotated.annotation.Command;
 import me.raider.plib.commons.cmd.annotated.annotation.Default;

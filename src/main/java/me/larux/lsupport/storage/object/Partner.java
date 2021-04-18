@@ -1,4 +1,4 @@
-package me.larux.lsupport.storage.partner;
+package me.larux.lsupport.storage.object;
 
 import me.raider.plib.commons.serializer.annotated.annotation.Serializable;
 import me.raider.plib.commons.serializer.annotated.annotation.Serialize;

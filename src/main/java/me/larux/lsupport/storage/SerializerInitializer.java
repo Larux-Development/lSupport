@@ -1,7 +1,7 @@
 package me.larux.lsupport.storage;
 
 import me.larux.lsupport.LaruxSupportPlugin;
-import me.larux.lsupport.storage.partner.Partner;
+import me.larux.lsupport.storage.object.Partner;
 import me.larux.lsupport.storage.factory.PartnerFactory;
 import me.larux.lsupport.storage.yaml.repository.YamlFindableRepository;
 import me.raider.plib.commons.serializer.SerializerManager;

@@ -1,7 +1,7 @@
 package me.larux.lsupport.storage;
 
 import com.google.common.util.concurrent.ListeningExecutorService;
-import me.larux.lsupport.storage.partner.Partner;
+import me.larux.lsupport.storage.object.Partner;
 import me.larux.lsupport.storage.yaml.YamlStorage;
 import me.raider.plib.commons.storage.Storage;
 import me.raider.plib.commons.storage.factory.InstanceFactory;

@@ -1,6 +1,6 @@
 package me.larux.lsupport.storage.factory;
 
-import me.larux.lsupport.storage.partner.Partner;
+import me.larux.lsupport.storage.object.Partner;
 import me.raider.plib.commons.serializer.SerializedObject;
 import me.raider.plib.commons.serializer.factory.InstanceFactory;
 
