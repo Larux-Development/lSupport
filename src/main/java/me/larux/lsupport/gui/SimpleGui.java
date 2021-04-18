@@ -43,52 +43,36 @@ public class SimpleGui implements Gui {
 
     @Override
     public void openMenu(Player player) {
-
         GuiPage page = pages.get(0);
         player.openInventory(page.getInventory());
-
         viewers.putIfAbsent(player.getUniqueId().toString(), 0);
-
     }
 
     @Override
     public void closeMenu(Player player) {
-
         player.closeInventory();
-
         viewers.remove(player.getUniqueId().toString());
-
     }
 
     @Override
     public void nextPage(Player player) {
-
         if (!lastPage(player)) {
-
-            closeMenu(player);
-
-            viewers.put(player.getUniqueId().toString(), viewers.get(player.getUniqueId().toString()) + 1);
-
+            int pageNumber = viewers.get(player.getUniqueId().toString()) + 1;
+            viewers.put(player.getUniqueId().toString(), pageNumber);
             GuiPage newPage = getActualGuiPage(player);
-
             player.openInventory(newPage.getInventory());
-
+            viewers.put(player.getUniqueId().toString(), pageNumber);
         }
     }
 
     @Override
     public void previousPage(Player player) {
-
         if (!firstPage(player)) {
-
-            closeMenu(player);
-
-            viewers.put(player.getUniqueId().toString(), viewers.get(player.getUniqueId().toString()) - 1);
-
+            int pageNumber = viewers.get(player.getUniqueId().toString()) - 1;
+            viewers.put(player.getUniqueId().toString(), pageNumber);
             GuiPage newPage = getActualGuiPage(player);
-
             player.openInventory(newPage.getInventory());
-
+            viewers.put(player.getUniqueId().toString(), pageNumber);
         }
     }
 
@@ -98,23 +82,17 @@ public class SimpleGui implements Gui {
     }
 
     private boolean lastPage(Player player) {
-
         if (viewers.containsKey(player.getUniqueId().toString())) {
-
             int actualPage = viewers.get(player.getUniqueId().toString());
             return actualPage==pages.size()-1;
-
         }
         return false;
     }
 
     private boolean firstPage(Player player) {
-
         if (viewers.containsKey(player.getUniqueId().toString())) {
-
             int actualPage = viewers.get(player.getUniqueId().toString());
             return actualPage==0;
-
         }
         return false;
     }

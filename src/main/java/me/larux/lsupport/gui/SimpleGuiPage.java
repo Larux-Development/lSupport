@@ -51,6 +51,15 @@ public class SimpleGuiPage implements GuiPage {
         return null;
     }
 
+    @Override
+    public void update() {
+        for (GuiItem item : guiItems) {
+            if (item!=null) {
+                inventory.setItem(item.getSlot(), item.getItem());
+            }
+        }
+    }
+
     public static class Builder implements GuiPage.Builder {
 
         private final String name;
@@ -73,7 +82,6 @@ public class SimpleGuiPage implements GuiPage {
 
         @Override
         public Builder addItem(GuiItem item) {
-
             this.guiItems[item.getSlot()]=item;
             inventory.setItem(item.getSlot(), item.getItem());
             return this;
@@ -81,12 +89,10 @@ public class SimpleGuiPage implements GuiPage {
 
         @Override
         public Builder addButton(Button button) {
-
             this.guiItems[button.getSlot()]=button;
             inventory.setItem(button.getSlot(), button.getItem());
             return this;
         }
-
 
         @Override
         public GuiPage build() {

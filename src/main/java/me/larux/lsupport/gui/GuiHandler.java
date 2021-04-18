@@ -20,7 +20,6 @@ public class GuiHandler {
             Gui gui = get().get(key);
 
             for (String viewing : gui.getViewers().keySet()) {
-
                 if (viewing.equals(viewer.getUniqueId().toString())) {
                     return gui;
                 }

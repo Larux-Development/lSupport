@@ -1,0 +1,49 @@
+menu:
+  name: "Partners Menu"
+  slots: 27
+  excluded:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 13
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 22
+    - 23
+    - 25
+    - 26
+  back-page:
+    enabled: true
+    slot: 21
+    material: "PAPER"
+    name: "&cGo Back"
+    lore:
+      - "&7Go back page"
+  next-page:
+    enabled: true
+    slot: 24
+    material: "PAPER"
+    name: "&aNext Page"
+    lore:
+      - "&7Go next page"
+  item:
+    type: SKULL
+    material: "DIRT"
+    name: "&a%partner_name%"
+    lore:
+      - "&7Support this partner by clicking"
+      - "&7his name."
