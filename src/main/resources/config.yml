@@ -1,1 +1,2 @@
-SupportInventoryName: "&7Support Menu"
+config:
+  max-supports-per-player: 3

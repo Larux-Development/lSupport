@@ -11,15 +11,17 @@ import java.util.ArrayList;
 public class YamlFindableRepository implements FindableRepository<FileCreator> {
 
     private final LaruxSupportPlugin plugin;
+    private final String folder;
 
-    public YamlFindableRepository(LaruxSupportPlugin plugin) {
+    public YamlFindableRepository(LaruxSupportPlugin plugin, String folder) {
         this.plugin = plugin;
+        this.folder = folder;
     }
 
     @Override
     public RepositorySection<FileCreator> find(String s) {
         FileCreator file = new FileCreator(plugin, s, ".yml",
-                new File(plugin.getDataFolder().getAbsolutePath() + "/data/"));
+                new File(plugin.getDataFolder().getAbsolutePath() + folder));
 
         RepositorySection<FileCreator> section = new YamlRepositorySection(file, new ArrayList<>(), null);
         section.setRepositoryPath(new YamlRepositoryPath(section));

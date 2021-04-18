@@ -6,9 +6,12 @@ import me.larux.lsupport.command.SupportCommand;
 import me.larux.lsupport.file.FileCreator;
 import me.larux.lsupport.gui.GuiHandler;
 import me.larux.lsupport.gui.GuiListener;
+import me.larux.lsupport.listener.PlayerJoinListener;
+import me.larux.lsupport.listener.PlayerQuitListener;
 import me.larux.lsupport.storage.SerializerInitializer;
 import me.larux.lsupport.storage.StorageInitializer;
 import me.larux.lsupport.storage.object.Partner;
+import me.larux.lsupport.storage.object.User;
 import me.larux.lsupport.util.Utils;
 import me.raider.plib.bukkit.cmd.BukkitAuthorizer;
 import me.raider.plib.bukkit.cmd.BukkitCommandManager;
@@ -56,6 +59,7 @@ public class LaruxSupportCore implements PluginCore {
     @Override
     public void disable() {
         savePartners();
+        saveUsers();
     }
 
     @Override
@@ -98,6 +102,11 @@ public class LaruxSupportCore implements PluginCore {
         return storageInitializer.getYamlPartnerStorage();
     }
 
+    @Override
+    public Storage<User> getUserStorage() {
+        return storageInitializer.getUserStorage();
+    }
+
     private void initObjects() {
         SerializerInitializer serializerInitializer = new SerializerInitializer(plugin);
         commandManager = new BukkitCommandManager(new DefaultMessageProvider(), new BukkitAuthorizer(), new BukkitMessenger());
@@ -118,6 +127,8 @@ public class LaruxSupportCore implements PluginCore {
 
     private void initListeners() {
         Bukkit.getPluginManager().registerEvents(new GuiListener(guiHandler), plugin);
+        Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), plugin);
+        Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(this), plugin);
     }
 
     private void loadPartners() {
@@ -137,5 +148,10 @@ public class LaruxSupportCore implements PluginCore {
     private void savePartners() {
         List<String> partners = new ArrayList<>(getStorage().get().keySet());
         getStorage().saveAll(partners.toArray(new String[0]));
+    }
+
+    private void saveUsers() {
+        List<String> users = new ArrayList<>(getUserStorage().get().keySet());
+        getUserStorage().saveAll(users.toArray(new String[0]));
     }
 }

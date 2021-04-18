@@ -55,7 +55,7 @@ public class SupportCommand implements PLibCommand {
         }
     }
     @Command(name = "reload", permission = "lsupport.admin")
-    public void runReloadCommand(@Injected Player player, String name) {
+    public void runReloadCommand(@Injected Player player) {
     	File lang = new File(core.getPlugin().getDataFolder(), "lang.yml");
     	File menu = new File(core.getPlugin().getDataFolder(), "lang.yml");
     	File config = new File(core.getPlugin().getDataFolder(), "lang.yml");
@@ -76,7 +76,7 @@ public class SupportCommand implements PLibCommand {
     	}
     }
     @Command(name = "admin help", permission = "lsupport.admin")
-    public void runHelpCommand(@Injected Player player, String name) {
+    public void runHelpCommand(@Injected Player player) {
     	sendHelpMessage(player);
     }
     @Default

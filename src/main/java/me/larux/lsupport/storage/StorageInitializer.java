@@ -2,6 +2,7 @@ package me.larux.lsupport.storage;
 
 import com.google.common.util.concurrent.ListeningExecutorService;
 import me.larux.lsupport.storage.object.Partner;
+import me.larux.lsupport.storage.object.User;
 import me.larux.lsupport.storage.yaml.YamlStorage;
 import me.raider.plib.commons.storage.Storage;
 import me.raider.plib.commons.storage.factory.InstanceFactory;
@@ -12,6 +13,7 @@ public class StorageInitializer {
 
     private final InstanceFactoryManager factoryManager;
 
+    private final Storage<User> userStorage;
     private final Storage<Partner> yamlPartnerStorage;
 
     public StorageInitializer(SerializerInitializer serializerInitializer, ListeningExecutorService executorService) {
@@ -19,12 +21,23 @@ public class StorageInitializer {
         this.factoryManager.createFactory(Partner.class,
                 (InstanceFactory<Partner>) Partner::new
         );
+        this.factoryManager.createFactory(User.class,
+                (InstanceFactory<User>) User::new
+        );
+
+        this.userStorage = new YamlStorage<>("user-storage", factoryManager,
+                serializerInitializer.getUserSerializerManager(), executorService, User.class);
+
         this.yamlPartnerStorage = new YamlStorage<>("partner-storage", factoryManager,
                 serializerInitializer.getYamlSerializerManager(), executorService, Partner.class);
     }
 
     public InstanceFactoryManager getFactoryManager() {
         return factoryManager;
+    }
+
+    public Storage<User> getUserStorage() {
+        return userStorage;
     }
 
     public Storage<Partner> getYamlPartnerStorage() {

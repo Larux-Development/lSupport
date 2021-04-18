@@ -11,6 +11,7 @@ import me.larux.lsupport.gui.item.buttom.Button;
 import me.larux.lsupport.gui.item.buttom.NextPageButton;
 import me.larux.lsupport.gui.item.buttom.PreviousPageButton;
 import me.larux.lsupport.storage.object.Partner;
+import me.larux.lsupport.storage.object.User;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,6 +20,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LaruxSupportMenu {
 
@@ -100,8 +102,30 @@ public class LaruxSupportMenu {
                 .slot(slot)
                 .item(item)
                 .action((inventoryClickEvent, gui) -> {
-                            partner.setPartners(partner.getPartners() + 1);
                             Player player = (Player) inventoryClickEvent.getWhoClicked();
+                            if (!player.hasPermission("lsupport.menu")) {
+                                player.sendMessage(core.getLang().getString("messages.no-perm")
+                                        .replace("%partner_name%", partner.getPlayerFromId().getName()));
+                                gui.closeMenu(player);
+                                return;
+                            }
+                            Map<String, User> supporters = core.getUserStorage().get();
+                            Map<String, Integer> supporting = supporters.get(player.getUniqueId().toString()).getSupported();
+
+                            int value = 0;
+                            for (int i : supporting.values()) {
+                                value+=i;
+                            }
+                            if (value>=core.getConfig().getInt("config.max-supports-per-player")) {
+                                player.sendMessage(core.getLang().getString("messages.menu.used-all-supports")
+                                        .replace("%partner_name%", partner.getPlayerFromId().getName()));
+                                gui.closeMenu(player);
+                                return;
+                            }
+
+                            partner.setPartners(partner.getPartners() + 1);
+                            supporting.put(partner.getId(), supporting.containsKey(partner.getId()) ? supporting.get(partner.getId()) + 1 : 1);
+
                             gui.closeMenu(player);
                             player.sendMessage(core.getLang().getString("messages.menu.now-supporting")
                                     .replace("%partner_name%", partner.getPlayerFromId().getName()));

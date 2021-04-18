@@ -4,6 +4,7 @@ import me.larux.lsupport.file.FileCreator;
 import me.larux.lsupport.gui.GuiHandler;
 import me.larux.lsupport.storage.StorageInitializer;
 import me.larux.lsupport.storage.object.Partner;
+import me.larux.lsupport.storage.object.User;
 import me.raider.plib.commons.cmd.CommandManager;
 import me.raider.plib.commons.storage.Storage;
 
@@ -28,5 +29,7 @@ public interface PluginCore {
     CommandManager getCommandManager();
 
     Storage<Partner> getStorage();
+
+    Storage<User> getUserStorage();
 
 }

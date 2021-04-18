@@ -19,8 +19,8 @@ public class UserFactory implements InstanceFactory<User> {
 
         User partner = new User((String) serializedMap.get("id"));
 
-        if (serializedMap.get("partners")!=null) {
-            Map<String, Object> map = ((MemorySection) serializedMap.get("partners")).getValues(true);
+        if (serializedMap.get("supported")!=null) {
+            Map<String, Object> map = ((MemorySection) serializedMap.get("supported")).getValues(true);
             Map<String, Integer> newMap = new HashMap<>();
             for (String mapKey : map.keySet()) {
                 newMap.put(mapKey, (Integer) map.get(mapKey));
