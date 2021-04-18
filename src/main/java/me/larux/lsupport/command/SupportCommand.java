@@ -1,6 +1,7 @@
 package me.larux.lsupport.command;
 
 import me.larux.lsupport.LaruxSupportCore;
+import me.larux.lsupport.LaruxSupportPlugin;
 import me.larux.lsupport.menu.LaruxSupportMenu;
 import me.larux.lsupport.storage.object.Partner;
 import me.raider.plib.commons.cmd.PLibCommand;
@@ -8,6 +9,7 @@ import me.raider.plib.commons.cmd.annotated.annotation.Command;
 import me.raider.plib.commons.cmd.annotated.annotation.Default;
 import me.raider.plib.commons.cmd.annotated.annotation.Injected;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -24,7 +26,8 @@ public class SupportCommand implements PLibCommand {
 
     @Command(name = "admin partner add", permission = "lsupport.admin")
     public void runAdminCommand(@Injected Player player, String name) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+        @SuppressWarnings("deprecation")
+		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         if (!offlinePlayer.hasPlayedBefore()) {
             player.sendMessage(core.getLang().getString("messages.admin.error-player-never-played"));
             return;
@@ -39,7 +42,8 @@ public class SupportCommand implements PLibCommand {
 
     @Command(name = "admin partner remove", permission = "lsupport.admin")
     public void runDeleteCommand(@Injected Player player, String name) {
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+        @SuppressWarnings("deprecation")
+		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
             player.sendMessage(core.getLang().getString("messages.admin.error-deleting-partner"));
@@ -50,6 +54,27 @@ public class SupportCommand implements PLibCommand {
             core.getStorage().get().remove(partner.getId());
             player.sendMessage(core.getLang().getString("messages.admin.success-deleting-partner"));
         }
+    }
+    @Command(name = "reload", permission = "lsupport.admin")
+    public void runReloadCommand(@Injected Player player, String name) {
+    	File lang = new File(core.getPlugin().getDataFolder(), "lang.yml");
+    	File menu = new File(core.getPlugin().getDataFolder(), "lang.yml");
+    	File config = new File(core.getPlugin().getDataFolder(), "lang.yml");
+    	if(lang.exists()) {
+    		core.getLang().save();
+    		core.getLang().reload();
+    		player.sendMessage(core.getLang().getString("messages.admin.success-reload").replaceAll("%file%", "lang.yml"));
+    	}
+    	if(menu.exists()) {
+    		core.getMenu().save();
+    		core.getMenu().reload();
+    		player.sendMessage(core.getLang().getString("messages.admin.success-reload").replaceAll("%file%", "menu.yml"));
+    	}
+    	if(config.exists()) {
+    		core.getConfig().save();
+    		core.getConfig().reload();
+    		player.sendMessage(core.getLang().getString("messages.admin.success-reload").replaceAll("%file%", "config.yml"));
+    	}
     }
 
     @Default
