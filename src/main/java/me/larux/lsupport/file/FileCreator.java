@@ -8,6 +8,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 
 public class FileCreator extends YamlConfiguration {
 
@@ -54,6 +55,15 @@ public class FileCreator extends YamlConfiguration {
             this.save(file);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void reload() {
+        File folder = this.plugin.getDataFolder();
+        File file = new File(folder, this.fileName);
+        try {
+            load(file);
+        } catch (IOException | InvalidConfigurationException e) {
+            this.plugin.getLogger().log(Level.SEVERE, "Reload of the file '" + this.fileName + "' failed.", e);
         }
     }
 
