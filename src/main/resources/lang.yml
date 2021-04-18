@@ -6,5 +6,6 @@ messages:
     error-player-never-played: "&cThe specified player never player before."
     error-deleting-partner: "&cThe specified partner don't exist."
     success-deleting-partner: "&aThe partner has been removed."
+    success-reload: "&aFile &c%file% &areloaded!"
   menu:
     now-supporting: "&aYou are supporting %partner_name%."
