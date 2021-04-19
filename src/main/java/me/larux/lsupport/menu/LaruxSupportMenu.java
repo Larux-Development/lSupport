@@ -1,6 +1,6 @@
 package me.larux.lsupport.menu;
 
-import me.larux.lsupport.LaruxSupportCore;
+import me.larux.lsupport.PluginCore;
 import me.larux.lsupport.file.FileCreator;
 import me.larux.lsupport.gui.GuiPage;
 import me.larux.lsupport.gui.SimpleGui;
@@ -24,9 +24,9 @@ import java.util.Map;
 
 public class LaruxSupportMenu {
 
-    private final LaruxSupportCore core;
+    private final PluginCore core;
 
-    public LaruxSupportMenu(LaruxSupportCore core) {
+    public LaruxSupportMenu(PluginCore core) {
         this.core = core;
     }
 

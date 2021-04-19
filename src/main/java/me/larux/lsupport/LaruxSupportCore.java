@@ -2,14 +2,17 @@ package me.larux.lsupport;
 
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.mongodb.Block;
+import com.mongodb.client.MongoCollection;
 import me.larux.lsupport.command.SupportCommand;
 import me.larux.lsupport.file.FileCreator;
 import me.larux.lsupport.gui.GuiHandler;
 import me.larux.lsupport.gui.GuiListener;
 import me.larux.lsupport.listener.PlayerJoinListener;
 import me.larux.lsupport.listener.PlayerQuitListener;
-import me.larux.lsupport.storage.SerializerInitializer;
-import me.larux.lsupport.storage.StorageInitializer;
+import me.larux.lsupport.storage.SerializerProvider;
+import me.larux.lsupport.storage.StorageProvider;
+import me.larux.lsupport.storage.mongo.MongoDatabaseCreator;
 import me.larux.lsupport.storage.object.Partner;
 import me.larux.lsupport.storage.object.User;
 import me.larux.lsupport.util.Utils;
@@ -22,6 +25,8 @@ import me.raider.plib.commons.cmd.annotated.CommandAnnotationProcessor;
 import me.raider.plib.commons.cmd.annotated.CommandAnnotationProcessorImpl;
 import me.raider.plib.commons.cmd.message.DefaultMessageProvider;
 import me.raider.plib.commons.storage.Storage;
+import me.raider.plib.commons.storage.StorageType;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 
 import java.io.File;
@@ -40,9 +45,11 @@ public class LaruxSupportCore implements PluginCore {
     private FileCreator lang;
     private FileCreator menu;
 
-    private StorageInitializer storageInitializer;
+    private StorageProvider storageInitializer;
     private CommandManager commandManager;
     private GuiHandler guiHandler;
+
+    private MongoDatabaseCreator mongoDatabaseCreator;
 
     public LaruxSupportCore(LaruxSupportPlugin plugin) {
         this.plugin = plugin;
@@ -53,7 +60,15 @@ public class LaruxSupportCore implements PluginCore {
         initObjects();
         initCommand();
         initListeners();
-        loadPartners();
+        switch (getStorageType()) {
+            case YAML:
+                loadPartnersByFile();
+                break;
+            case MONGODB:
+                loadPartnersByMongo();
+                break;
+            default:
+        }
     }
 
     @Override
@@ -88,7 +103,7 @@ public class LaruxSupportCore implements PluginCore {
     }
 
     @Override
-    public StorageInitializer getStorageInitializer() {
+    public StorageProvider getStorageInitializer() {
         return storageInitializer;
     }
 
@@ -107,11 +122,31 @@ public class LaruxSupportCore implements PluginCore {
         return storageInitializer.getUserStorage();
     }
 
+    @Override
+    public MongoDatabaseCreator getMongoDB() {
+        return mongoDatabaseCreator;
+    }
+
+    @Override
+    public StorageType getStorageType() {
+        try {
+            return StorageType.valueOf(config.getString("database.type"));
+        } catch (IllegalArgumentException e) {
+            return StorageType.YAML;
+        }
+    }
+
     private void initObjects() {
-        SerializerInitializer serializerInitializer = new SerializerInitializer(plugin);
-        commandManager = new BukkitCommandManager(new DefaultMessageProvider(), new BukkitAuthorizer(), new BukkitMessenger());
-        storageInitializer = new StorageInitializer(serializerInitializer, EXECUTOR_SERVICE);
         config = new FileCreator(plugin, "config");
+
+        if (getStorageType()==StorageType.MONGODB) {
+            mongoDatabaseCreator = new MongoDatabaseCreator(this);
+        }
+        SerializerProvider serializerInitializer = new SerializerProvider(this);
+
+        commandManager = new BukkitCommandManager(new DefaultMessageProvider(), new BukkitAuthorizer(), new BukkitMessenger());
+        storageInitializer = new StorageProvider(serializerInitializer, EXECUTOR_SERVICE, getStorageType());
+
         lang = new FileCreator(plugin, "lang");
         menu = new FileCreator(plugin, "menu");
         guiHandler = new GuiHandler();
@@ -131,7 +166,7 @@ public class LaruxSupportCore implements PluginCore {
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(this), plugin);
     }
 
-    private void loadPartners() {
+    private void loadPartnersByFile() {
         if (!new File(plugin.getDataFolder().getAbsolutePath() + "/data/").exists()) {
             return;
         }
@@ -143,6 +178,16 @@ public class LaruxSupportCore implements PluginCore {
         }
         getStorage().loadAll(fileNames.toArray(new String[0]));
         Bukkit.getLogger().info("Loaded " + count + " partners successfully!");
+    }
+
+    private void loadPartnersByMongo() {
+        MongoCollection<Document> collection = mongoDatabaseCreator.getCollection("partners");
+        List<String> fileNames = new ArrayList<>();
+        collection.find().forEach((Block<? super Document>) document -> {
+            fileNames.add(document.get("id", String.class));
+        });
+        getStorage().loadAll(fileNames.toArray(new String[0]));
+        Bukkit.getLogger().info("Loaded partners successfully!");
     }
 
     private void savePartners() {

@@ -1,12 +1,13 @@
 package me.larux.lsupport.command;
 
-import me.larux.lsupport.LaruxSupportCore;
+import me.larux.lsupport.PluginCore;
 import me.larux.lsupport.menu.LaruxSupportMenu;
 import me.larux.lsupport.storage.object.Partner;
 import me.raider.plib.commons.cmd.PLibCommand;
 import me.raider.plib.commons.cmd.annotated.annotation.Command;
 import me.raider.plib.commons.cmd.annotated.annotation.Default;
 import me.raider.plib.commons.cmd.annotated.annotation.Injected;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -17,9 +18,9 @@ import java.io.File;
 @Command(name = "support")
 public class SupportCommand implements PLibCommand {
 
-    private final LaruxSupportCore core;
+    private final PluginCore core;
     
-    public SupportCommand(LaruxSupportCore core) {
+    public SupportCommand(PluginCore core) {
         this.core = core;
     }
 
@@ -48,10 +49,18 @@ public class SupportCommand implements PLibCommand {
             player.sendMessage(core.getLang().getString("messages.admin.error-deleting-partner"));
             return;
         }
-        File file = new File(core.getPlugin().getDataFolder().getAbsolutePath() + "/data/", partner.getId() + ".yml");
-        if (file.delete()) {
-            core.getStorage().get().remove(partner.getId());
-            player.sendMessage(core.getLang().getString("messages.admin.success-deleting-partner"));
+        switch (core.getStorageType()) {
+            case YAML:
+                File file = new File(core.getPlugin().getDataFolder().getAbsolutePath() + "/data/", partner.getId() + ".yml");
+                if (file.delete()) {
+                    core.getStorage().get().remove(partner.getId());
+                    player.sendMessage(core.getLang().getString("messages.admin.success-deleting-partner"));
+                }
+                break;
+            case MONGODB:
+                deleteMongoDocument(partner.getId());
+                break;
+            default:
         }
     }
     @Command(name = "reload", permission = "lsupport.admin")
@@ -91,5 +100,12 @@ public class SupportCommand implements PLibCommand {
     	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner remove &1- &2Remove one player from the partners list."));
     	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support reload &1- &2Reload files [config.yml, lang.yml, menu.yml]."));
     	player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin help &1- &2Shows this help message."));
+    }
+
+    private void deleteMongoDocument(String id) {
+        Bukkit.getScheduler().runTaskAsynchronously(core.getPlugin(), () -> {
+            Document document = new Document().append("id", id);
+            core.getMongoDB().getCollection("partners").deleteOne(document);
+        });
     }
 }

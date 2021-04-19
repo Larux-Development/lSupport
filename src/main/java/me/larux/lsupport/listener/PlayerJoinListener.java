@@ -1,6 +1,6 @@
 package me.larux.lsupport.listener;
 
-import me.larux.lsupport.LaruxSupportCore;
+import me.larux.lsupport.PluginCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,9 +8,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    private final LaruxSupportCore core;
+    private final PluginCore core;
 
-    public PlayerJoinListener(LaruxSupportCore core) {
+    public PlayerJoinListener(PluginCore core) {
         this.core = core;
     }
 

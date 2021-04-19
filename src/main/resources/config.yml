@@ -1,2 +1,6 @@
+database:
+  type: MONGODB
+  mongo:
+    uri: "mongodb://localhost"
 config:
   max-supports-per-player: 3
