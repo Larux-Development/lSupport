@@ -183,9 +183,7 @@ public class LaruxSupportCore implements PluginCore {
     private void loadPartnersByMongo() {
         MongoCollection<Document> collection = mongoDatabaseCreator.getCollection("partners");
         List<String> fileNames = new ArrayList<>();
-        collection.find().forEach((Block<? super Document>) document -> {
-            fileNames.add(document.get("id", String.class));
-        });
+        collection.find().forEach((Block<? super Document>) document -> fileNames.add(document.get("id", String.class)));
         getStorage().loadAll(fileNames.toArray(new String[0]));
         Bukkit.getLogger().info("Loaded partners successfully!");
     }

@@ -1,7 +1,5 @@
 package me.larux.lsupport.storage;
 
-import me.larux.lsupport.LaruxSupportCore;
-import me.larux.lsupport.LaruxSupportPlugin;
 import me.larux.lsupport.PluginCore;
 import me.larux.lsupport.storage.factory.PartnerFactory;
 import me.larux.lsupport.storage.factory.UserFactory;
