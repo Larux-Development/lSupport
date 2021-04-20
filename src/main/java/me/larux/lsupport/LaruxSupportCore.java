@@ -12,6 +12,7 @@ import me.larux.lsupport.listener.PlayerJoinListener;
 import me.larux.lsupport.listener.PlayerQuitListener;
 import me.larux.lsupport.storage.SerializerProvider;
 import me.larux.lsupport.storage.StorageProvider;
+import me.larux.lsupport.storage.handler.PartnerHandler;
 import me.larux.lsupport.storage.mongo.MongoDatabaseCreator;
 import me.larux.lsupport.storage.object.Partner;
 import me.larux.lsupport.storage.object.User;
@@ -48,6 +49,7 @@ public class LaruxSupportCore implements PluginCore {
     private StorageProvider storageInitializer;
     private CommandManager commandManager;
     private GuiHandler guiHandler;
+    private PartnerHandler partnerHandler;
 
     private MongoDatabaseCreator mongoDatabaseCreator;
 
@@ -136,6 +138,11 @@ public class LaruxSupportCore implements PluginCore {
         }
     }
 
+    @Override
+    public PartnerHandler getPartnerHandler() {
+        return partnerHandler;
+    }
+
     private void initObjects() {
         config = new FileCreator(plugin, "config");
 
@@ -150,6 +157,7 @@ public class LaruxSupportCore implements PluginCore {
         lang = new FileCreator(plugin, "lang");
         menu = new FileCreator(plugin, "menu");
         guiHandler = new GuiHandler();
+        partnerHandler = new PartnerHandler(this);
     }
 
     private void initCommand() {

@@ -3,6 +3,7 @@ package me.larux.lsupport;
 import me.larux.lsupport.file.FileCreator;
 import me.larux.lsupport.gui.GuiHandler;
 import me.larux.lsupport.storage.StorageProvider;
+import me.larux.lsupport.storage.handler.PartnerHandler;
 import me.larux.lsupport.storage.mongo.MongoDatabaseCreator;
 import me.larux.lsupport.storage.object.Partner;
 import me.larux.lsupport.storage.object.User;
@@ -37,5 +38,7 @@ public interface PluginCore {
     MongoDatabaseCreator getMongoDB();
 
     StorageType getStorageType();
+
+    PartnerHandler getPartnerHandler();
 
 }

@@ -39,8 +39,8 @@ repositories {
 dependencies {
     implementation 'org.mongodb:mongodb-driver:3.3.0'
     shadow 'org.mongodb:mongodb-driver:3.3.0'
-    implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:7c77527e14'
-    shadow 'com.github.xRaidersito.p-lib:bukkit-cmd:7c77527e14'
+    implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:3e10f468d1'
+    shadow 'com.github.xRaidersito.p-lib:bukkit-cmd:3e10f468d1'
     implementation 'com.github.xRaidersito.p-lib:commons-storage:87d656eb65'
     shadow 'com.github.xRaidersito.p-lib:commons-storage:87d656eb65'
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'

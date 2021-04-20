@@ -1,4 +1,5 @@
 messages:
+  disabled: "&cThis feature is disabled."
   no-perm: "&cYou don't have permission to use this."
   admin:
     success-creating-partner: "&aPartner created successfully."
@@ -7,6 +8,11 @@ messages:
     error-deleting-partner: "&cThe specified partner don't exist."
     success-deleting-partner: "&aThe partner has been removed."
     success-reload: "&aFile &c%file% &areloaded!"
-  menu:
+  add:
     now-supporting: "&aYou are supporting %partner_name%."
     used-all-supports: "&cYou used all supports."
+    cant-find: "&cCan't find the specified partner."
+  remove:
+    not-supporting: "&cYou are not supporting this partner."
+    success: "&cYou stopped from supporting this partner."
+    cant-find: "&cCan't find the specified partner."

@@ -3,4 +3,5 @@ database:
   mongo:
     uri: "mongodb://localhost"
 config:
+  stop-supporting: false
   max-supports-per-player: 3
