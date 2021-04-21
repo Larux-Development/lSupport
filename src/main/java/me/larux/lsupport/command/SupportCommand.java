@@ -14,7 +14,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import java.io.File;
 import java.util.Optional;
 
@@ -75,7 +74,8 @@ public class SupportCommand implements PLibCommand {
             return;
         }
         Player player = sender.getSender(Player.class).get();
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+        @SuppressWarnings("deprecation")
+		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
             player.sendMessage(core.getLang().getString("messages.add.cant-find"));
@@ -90,7 +90,8 @@ public class SupportCommand implements PLibCommand {
             return;
         }
         Player player = sender.getSender(Player.class).get();
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+        @SuppressWarnings("deprecation")
+		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
             player.sendMessage(core.getLang().getString("messages.remove.cant-find"));
@@ -103,8 +104,8 @@ public class SupportCommand implements PLibCommand {
     public void runReloadCommand(@Injected BukkitSender sender) {
         CommandSender player = sender.getSender();
     	File lang = new File(core.getPlugin().getDataFolder(), "lang.yml");
-    	File menu = new File(core.getPlugin().getDataFolder(), "lang.yml");
-    	File config = new File(core.getPlugin().getDataFolder(), "lang.yml");
+    	File menu = new File(core.getPlugin().getDataFolder(), "menu.yml");
+    	File config = new File(core.getPlugin().getDataFolder(), "config.yml");
     	if(lang.exists()) {
     		core.getLang().reload();
     		player.sendMessage(core.getLang().getString("messages.admin.success-reload").replaceAll("%file%", "lang.yml"));
@@ -125,6 +126,21 @@ public class SupportCommand implements PLibCommand {
     public void runHelpCommand(@Injected BukkitSender sender) {
     	sendHelpMessage(sender.getSender());
     }
+    @Command(name = "help")
+    public void runUserHelpCommand(@Injected BukkitSender sender) {
+    	if(sender.isPlayerSender()) {
+    		if(sender.getSender().hasPermission("lsupport.admin")) {
+    			sendHelpMessage(sender.getSender());
+    		}else {
+    			sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[&blSupport&6] &aby &cRaider &a& &ctheabdel572&a."));
+        		sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support &1- &2Opens the supporters GUI."));
+        		sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support add <partner> &1- &2Start supporting a partner."));
+        		sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support remove <partner> &1- &2Stop supporting a partner."));
+    		}
+    	}else {
+    		sendHelpMessage(sender.getSender());
+    	}
+    }
 
     @Default
     public void runSupportCommand(@Injected BukkitSender sender) {
@@ -141,6 +157,9 @@ public class SupportCommand implements PLibCommand {
     public void sendHelpMessage(CommandSender sender) {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[&blSupport&6] &aby &cRaider &a& &ctheabdel572&a."));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aRun &c/support admin help &ato see this message."));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support &1- &2Opens the supporters GUI."));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support add <partner> &1- &2Start supporting a partner."));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support remove <partner> &1- &2Stop supporting a partner."));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner add &1- &2Add one player to the partners list."));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner remove &1- &2Remove one player from the partners list."));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support reload &1- &2Reload files [config.yml, lang.yml, menu.yml]."));
