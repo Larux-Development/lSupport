@@ -21,23 +21,13 @@ public class LaruxSupportPlugin extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m                                                            "));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aEnabling "+getlSupportName()+"&a..."));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &aby &6LaruxDevelopment&a."));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &aby &cRaider &a& &ctheabdel572&a."));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &aenabled! &9Version: &c"+getlSupportVersion()));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m                                                            "));
+		sendEnableOrDisableMessage(true);
 		core.init();
 	}
 
 	@Override
 	public void onDisable() {
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m                                                            "));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&4Disabling "+getlSupportName()+"&4..."));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &4by &6LaruxDevelopment&4."));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &4by &cRaider &4& &ctheabdel572&a."));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &4disabled!"));
-		Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m                                                            "));
+		sendEnableOrDisableMessage(false);
 		core.disable();
 	}
 	
@@ -47,5 +37,22 @@ public class LaruxSupportPlugin extends JavaPlugin {
 
 	public String getlSupportName() {
 		return this.name;
+	}
+	public void sendEnableOrDisableMessage(boolean enabling) {
+		if(enabling) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m                                                            "));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aEnabling "+getlSupportName()+"&a..."));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &aby &6LaruxDevelopment&a."));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &aby &cRaider &a& &ctheabdel572&a."));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &aenabled! &9Version: &c"+getlSupportVersion()));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m                                                            "));
+		}else {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m                                                            "));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&4Disabling "+getlSupportName()+"&4..."));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &4by &6LaruxDevelopment&4."));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &4by &cRaider &4& &ctheabdel572&a."));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', getlSupportName()+" &4disabled!"));
+			Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7&m                                                            "));
+		}
 	}
 }
