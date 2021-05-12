@@ -73,7 +73,11 @@ public class SupportCommand implements PLibCommand {
         if (!sender.isPlayerSender()) {
             return;
         }
-        Player player = sender.getSender(Player.class).get();
+        Optional<Player> pSender = sender.getSender(Player.class);
+        if (!pSender.isPresent()) {
+            return;
+        }
+        Player player = pSender.get();
         @SuppressWarnings("deprecation")
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
@@ -89,7 +93,11 @@ public class SupportCommand implements PLibCommand {
         if (!sender.isPlayerSender()) {
             return;
         }
-        Player player = sender.getSender(Player.class).get();
+        Optional<Player> pSender = sender.getSender(Player.class);
+        if (!pSender.isPresent()) {
+            return;
+        }
+        Player player = pSender.get();
         @SuppressWarnings("deprecation")
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
@@ -128,7 +136,11 @@ public class SupportCommand implements PLibCommand {
         if (!sender.isPlayerSender()) {
             return;
         }
-        Player player = sender.getSender(Player.class).get();
+        Optional<Player> pSender = sender.getSender(Player.class);
+        if (!pSender.isPresent()) {
+            return;
+        }
+        Player player = pSender.get();
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
@@ -145,7 +157,11 @@ public class SupportCommand implements PLibCommand {
         if (!sender.isPlayerSender()) {
             return;
         }
-        Player player = sender.getSender(Player.class).get();
+        Optional<Player> pSender = sender.getSender(Player.class);
+        if (!pSender.isPresent()) {
+            return;
+        }
+        Player player = pSender.get();
         Collection<Partner> partners = core.getStorage().get().values();
         if (partners.isEmpty()) {
             player.sendMessage(core.getLang().getString("messages.cant-find"));
