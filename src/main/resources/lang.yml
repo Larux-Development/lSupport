@@ -19,3 +19,7 @@ messages:
     cant-find: "&cCan't find the specified partner."
   view:
     cmd: "%name%: &a%supporters% supporters!"
+    top:
+      - "&e&lTOP 1: &f%partner_name_1% &7: &f%partner_supporters_1%"
+      - "&e&lTOP 2: &f%partner_name_2% &7: &f%partner_supporters_2%"
+      - "&e&lTOP 3: &f%partner_name_3% &7: &f%partner_supporters_3%"

@@ -174,13 +174,16 @@ public class SupportCommand implements PLibCommand {
 
         List<String> messages = core.getLang().getStringList("messages.view.top");
 
-        for (int i = 0 ; i < partnerList.size() ; i++) {
-            String m = "";
-            for (String message : messages) {
-                m = message.replace("%partner_name_" + i + 1 + "%", partnerList.get(i).getPlayerFromId().getName())
-                        .replace("%partner_supporters_" + i + 1 + "%", String.valueOf(partnerList.get(i).getPartners()));
+        for (int m = 0 ; m < messages.size() ; m++) {
+            String messageCopy = "";
+            for (int i = 0 ; i < partnerList.size() ; i++) {
+                if (i == m) {
+                    int index = i + 1;
+                    messageCopy = messages.get(m).replace("%partner_name_" + index + "%", partnerList.get(i).getPlayerFromId().getName())
+                            .replace("%partner_supporters_" + index + "%", String.valueOf(partnerList.get(i).getPartners()));
+                }
             }
-            player.sendMessage(m);
+            player.sendMessage(messageCopy);
         }
     }
 
