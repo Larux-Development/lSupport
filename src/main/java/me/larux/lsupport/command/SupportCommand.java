@@ -16,7 +16,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.Optional;
+import java.util.*;
 
 @Command(name = "support")
 public class SupportCommand implements PLibCommand {
@@ -78,7 +78,7 @@ public class SupportCommand implements PLibCommand {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
-            player.sendMessage(core.getLang().getString("messages.add.cant-find"));
+            player.sendMessage(core.getLang().getString("messages.cant-find"));
             return;
         }
         core.getPartnerHandler().addSupporterToPartner(partner, player);
@@ -107,18 +107,65 @@ public class SupportCommand implements PLibCommand {
     	File config = new File(core.getPlugin().getDataFolder(), "lang.yml");
     	if(lang.exists()) {
     		core.getLang().reload();
-    		player.sendMessage(core.getLang().getString("messages.admin.success-reload").replaceAll("%file%", "lang.yml"));
+    		player.sendMessage(core.getLang().getString("messages.admin.success-reload")
+                    .replaceAll("%file%", "lang.yml"));
     	}
     	if(menu.exists()) {
     		core.getMenu().reload();
-    		player.sendMessage(core.getLang().getString("messages.admin.success-reload").replaceAll("%file%", "menu.yml"));
+    		player.sendMessage(core.getLang().getString("messages.admin.success-reload")
+                    .replaceAll("%file%", "menu.yml"));
     	}
     	if(config.exists()) {
     		core.getConfig().reload();
-    		player.sendMessage(core.getLang().getString("messages.admin.success-reload").replaceAll("%file%", "config.yml"));
+    		player.sendMessage(core.getLang().getString("messages.admin.success-reload")
+                    .replaceAll("%file%", "config.yml"));
     	}
     }
 
+    @Command(name = "view")
+    public void runSeeCommand(@Injected BukkitSender sender, String name) {
+        if (!sender.isPlayerSender()) {
+            return;
+        }
+        Player player = sender.getSender(Player.class).get();
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+        Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
+        if (partner==null) {
+            player.sendMessage(core.getLang().getString("messages.cant-find"));
+            return;
+        }
+        player.sendMessage(core.getLang().getString("messages.view.cmd")
+                .replace("%name%", partner.getPlayerFromId().getName())
+                .replace("%supporters%", String.valueOf(partner.getPartners())));
+    }
+
+    @Command(name = "top")
+    public void runTopCommand(@Injected BukkitSender sender) {
+        if (!sender.isPlayerSender()) {
+            return;
+        }
+        Player player = sender.getSender(Player.class).get();
+        Collection<Partner> partners = core.getStorage().get().values();
+        if (partners.isEmpty()) {
+            player.sendMessage(core.getLang().getString("messages.cant-find"));
+            return;
+        }
+        List<Partner> partnerList = new ArrayList<>(partners);
+
+        partnerList.sort(Comparator.comparingInt(Partner::getPartners));
+        Collections.reverse(partnerList);
+
+        List<String> messages = core.getLang().getStringList("messages.view.top");
+
+        for (int i = 0 ; i < partnerList.size() ; i++) {
+            String m = "";
+            for (String message : messages) {
+                m = message.replace("%partner_name_" + i + 1 + "%", partnerList.get(i).getPlayerFromId().getName())
+                        .replace("%partner_supporters_" + i + 1 + "%", String.valueOf(partnerList.get(i).getPartners()));
+            }
+            player.sendMessage(m);
+        }
+    }
 
 
     @Command(name = "admin help", permission = "lsupport.admin")

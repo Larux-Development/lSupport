@@ -29,11 +29,8 @@ public class SimpleGui implements Gui {
 
     @Override
     public GuiPage getActualGuiPage(Player player) {
-
         for (String key : viewers.keySet()) {
-
             if (key.equals(player.getUniqueId().toString())) {
-
                 int pageNumber = viewers.get(key);
                 return pages.get(pageNumber);
             }
