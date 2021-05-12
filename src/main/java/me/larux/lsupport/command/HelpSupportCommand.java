@@ -27,6 +27,8 @@ public class HelpSupportCommand implements PLibCommand{
 		        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support remove <partner> &1- &2Stop supporting a partner."));
 		        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner add &1- &2Add one player to the partners list."));
 		        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner remove &1- &2Remove one player from the partners list."));
+		        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support view <partner> &1- &2Use this to see the supports a partner has."));
+		        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support top &1- &2Use this to see the top of partners with more supports."));
 		        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support reload &1- &2Reload files [config.yml, lang.yml, menu.yml]."));
 		        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin help &1- &2Shows this help message."));
 			}else {
@@ -43,6 +45,8 @@ public class HelpSupportCommand implements PLibCommand{
 	        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support remove <partner> &1- &2Stop supporting a partner."));
 	        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner add &1- &2Add one player to the partners list."));
 	        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner remove &1- &2Remove one player from the partners list."));
+	        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support view <partner> &1- &2Use this to see the supports a partner has."));
+	        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support top &1- &2Use this to see the top of partners with more supports."));
 	        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support reload &1- &2Reload files [config.yml, lang.yml, menu.yml]."));
 	        sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin help &1- &2Shows this help message."));
 		}

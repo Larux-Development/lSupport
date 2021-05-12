@@ -141,7 +141,8 @@ public class SupportCommand implements PLibCommand {
             return;
         }
         Player player = pSender.get();
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+        @SuppressWarnings("deprecation")
+		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
             player.sendMessage(core.getLang().getString("messages.cant-find"));
@@ -228,6 +229,8 @@ public class SupportCommand implements PLibCommand {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support remove <partner> &1- &2Stop supporting a partner."));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner add &1- &2Add one player to the partners list."));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner remove &1- &2Remove one player from the partners list."));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support view <partner> &1- &2Use this to see the supports a partner has."));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support top &1- &2Use this to see the top of partners with more supports."));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support reload &1- &2Reload files [config.yml, lang.yml, menu.yml]."));
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin help &1- &2Shows this help message."));
     }
