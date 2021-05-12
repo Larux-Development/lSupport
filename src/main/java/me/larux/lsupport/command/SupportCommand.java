@@ -3,6 +3,7 @@ package me.larux.lsupport.command;
 import me.larux.lsupport.PluginCore;
 import me.larux.lsupport.menu.LaruxSupportMenu;
 import me.larux.lsupport.storage.object.Partner;
+import me.larux.lsupport.util.Utils;
 import me.raider.plib.bukkit.cmd.BukkitSender;
 import me.raider.plib.commons.cmd.PLibCommand;
 import me.raider.plib.commons.cmd.annotated.annotation.Command;
@@ -188,16 +189,16 @@ public class SupportCommand implements PLibCommand {
         }
     }
 
-
     @Command(name = "admin help", permission = "lsupport.admin")
     public void runHelpCommand(@Injected BukkitSender sender) {
-    	sendHelpMessage(sender.getSender());
+        Utils.helpMessage(sender.getSender());
     }
+
     @Command(name = "help")
     public void runUserHelpCommand(@Injected BukkitSender sender) {
     	if(sender.isPlayerSender()) {
     		if(sender.getSender().hasPermission("lsupport.admin")) {
-    			sendHelpMessage(sender.getSender());
+                Utils.helpMessage(sender.getSender());
     		}else {
     			sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[&blSupport&6] &aby &cRaider &a& &ctheabdel572&a."));
         		sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support &1- &2Opens the supporters GUI."));
@@ -205,7 +206,7 @@ public class SupportCommand implements PLibCommand {
         		sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support remove <partner> &1- &2Stop supporting a partner."));
     		}
     	}else {
-    		sendHelpMessage(sender.getSender());
+            Utils.helpMessage(sender.getSender());
     	}
     }
 
@@ -219,20 +220,6 @@ public class SupportCommand implements PLibCommand {
             return;
         }
         new LaruxSupportMenu(core).openMenu(player.get());
-    }
-
-    public void sendHelpMessage(CommandSender sender) {
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[&blSupport&6] &aby &cRaider &a& &ctheabdel572&a."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aRun &c/support admin help &ato see this message."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support &1- &2Opens the supporters GUI."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support add <partner> &1- &2Start supporting a partner."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support remove <partner> &1- &2Stop supporting a partner."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner add &1- &2Add one player to the partners list."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin partner remove &1- &2Remove one player from the partners list."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support view <partner> &1- &2Use this to see the supports a partner has."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support top &1- &2Use this to see the top of partners with more supports."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support reload &1- &2Reload files [config.yml, lang.yml, menu.yml]."));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support admin help &1- &2Shows this help message."));
     }
 
     private void deleteMongoDocument(String id) {

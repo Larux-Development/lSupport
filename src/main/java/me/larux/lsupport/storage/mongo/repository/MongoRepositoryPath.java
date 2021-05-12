@@ -33,7 +33,9 @@ public class MongoRepositoryPath implements RepositoryPath<Document> {
                 return;
             }
             Document updateDoc = new Document("$set", saveDocument);
-            mongoRepositorySection.getMongoCollection().updateOne(loadDocument, updateDoc, new UpdateOptions().upsert(true));
+            mongoRepositorySection
+                    .getMongoCollection()
+                    .updateOne(loadDocument, updateDoc, new UpdateOptions().upsert(true));
         }
     }
 

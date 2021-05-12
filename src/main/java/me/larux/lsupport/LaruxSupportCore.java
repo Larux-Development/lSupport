@@ -176,7 +176,7 @@ public class LaruxSupportCore implements PluginCore {
                         new LiteralArgumentProcessor(commandManager.getSuppliers()));
 
         commandManager.register(annotationProcessor.processAll(new SupportCommand(this)));
-        commandManager.register(annotationProcessor.processAll(new HelpSupportCommand(this)));
+        commandManager.register(annotationProcessor.processAll(new HelpSupportCommand()));
     }
 
     private void initListeners() {

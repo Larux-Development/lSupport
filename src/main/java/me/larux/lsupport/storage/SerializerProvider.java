@@ -20,9 +20,10 @@ import me.raider.plib.commons.serializer.factory.SimpleInstanceFactoryManager;
 public class SerializerProvider {
 
     private final Binder binder;
-    private final MongoDatabaseCreator mongoDatabaseCreator;
     private final SerializeAnnotationProcessor annotationProcessor;
     private final InstanceFactoryManager factoryManager;
+
+    private final MongoDatabaseCreator mongoDatabaseCreator;
     private final PluginCore core;
 
     public SerializerProvider(PluginCore core) {
