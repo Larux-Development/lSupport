@@ -2,6 +2,9 @@ messages:
   disabled: "&cThis feature is disabled."
   no-perm: "&cYou don't have permission to use this."
   cant-find: "&cCan't find this partner in db."
+  command:
+    bad-usage: "&cBad usage!"
+    invalid-argument: "&cInvalid argument!"
   admin:
     success-creating-partner: "&aPartner created successfully."
     error-partner-exist: "&cThe partner already exist."

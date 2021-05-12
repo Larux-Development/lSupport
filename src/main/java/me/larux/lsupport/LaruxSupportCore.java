@@ -27,6 +27,7 @@ import me.raider.plib.commons.cmd.LiteralArgumentProcessor;
 import me.raider.plib.commons.cmd.annotated.CommandAnnotationProcessor;
 import me.raider.plib.commons.cmd.annotated.CommandAnnotationProcessorImpl;
 import me.raider.plib.commons.cmd.message.DefaultMessageProvider;
+import me.raider.plib.commons.cmd.message.MessageProvider;
 import me.raider.plib.commons.storage.Storage;
 import me.raider.plib.commons.storage.StorageType;
 import org.bson.Document;
@@ -147,16 +148,23 @@ public class LaruxSupportCore implements PluginCore {
 
     private void initObjects() {
         config = new FileCreator(plugin, "config");
+        lang = new FileCreator(plugin, "lang");
 
         if (getStorageType()==StorageType.MONGODB) {
             mongoDatabaseCreator = new MongoDatabaseCreator(this);
         }
         SerializerProvider serializerInitializer = new SerializerProvider(this);
 
-        commandManager = new BukkitCommandManager(new DefaultMessageProvider(), new BukkitAuthorizer(), new BukkitMessenger());
+        MessageProvider messageProvider = new DefaultMessageProvider();
+
+        messageProvider.register("usage", lang.getString("messages.command.bad-usage"));
+        messageProvider.register("no-permission", lang.getString("messages.no-perm"));
+        messageProvider.register("invalid-argument", lang.getString("messages.command.invalid-argument"));
+        messageProvider.register("invalid-injection", lang.getString("messages.command.invalid-argument"));
+
+        commandManager = new BukkitCommandManager(messageProvider, new BukkitAuthorizer(), new BukkitMessenger());
         storageInitializer = new StorageProvider(serializerInitializer, EXECUTOR_SERVICE, getStorageType());
 
-        lang = new FileCreator(plugin, "lang");
         menu = new FileCreator(plugin, "menu");
         guiHandler = new GuiHandler();
         partnerHandler = new PartnerHandler(this);
