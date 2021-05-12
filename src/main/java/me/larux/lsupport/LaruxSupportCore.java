@@ -4,6 +4,8 @@ import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
+
+import me.larux.lsupport.command.HelpSupportCommand;
 import me.larux.lsupport.command.SupportCommand;
 import me.larux.lsupport.file.FileCreator;
 import me.larux.lsupport.gui.GuiHandler;
@@ -166,6 +168,7 @@ public class LaruxSupportCore implements PluginCore {
                         new LiteralArgumentProcessor(commandManager.getSuppliers()));
 
         commandManager.register(annotationProcessor.processAll(new SupportCommand(this)));
+        commandManager.register(annotationProcessor.processAll(new HelpSupportCommand(this)));
     }
 
     private void initListeners() {

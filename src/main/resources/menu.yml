@@ -29,7 +29,7 @@ menu:
       - "&7Go back page"
   next-page:
     enabled: true
-    slot: 24
+    slot: 23
     material: "PAPER"
     name: "&aNext Page"
     lore:
