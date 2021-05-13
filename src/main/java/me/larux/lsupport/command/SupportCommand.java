@@ -3,6 +3,7 @@ package me.larux.lsupport.command;
 import me.larux.lsupport.PluginCore;
 import me.larux.lsupport.menu.LaruxSupportMenu;
 import me.larux.lsupport.storage.object.Partner;
+import me.larux.lsupport.storage.object.User;
 import me.larux.lsupport.util.Utils;
 import me.raider.plib.bukkit.cmd.BukkitSender;
 import me.raider.plib.commons.cmd.PLibCommand;
@@ -56,6 +57,12 @@ public class SupportCommand implements PLibCommand {
         }
         switch (core.getStorageType()) {
             case YAML:
+                for (User user : core.getAllUsersByYaml()) {
+                    if (user.getSupported().containsKey(partner.getId())) {
+                        user.getSupported().remove(partner.getId());
+                        core.getSerializer().getYamlUserSerializerManager().serialize(user, user.getId());
+                    }
+                }
                 File file = new File(core.getPlugin().getDataFolder().getAbsolutePath() + "/data/", partner.getId() + ".yml");
                 if (file.delete()) {
                     core.getStorage().get().remove(partner.getId());
@@ -63,6 +70,12 @@ public class SupportCommand implements PLibCommand {
                 }
                 break;
             case MONGODB:
+                for (User user : core.getAllUsersByMongo()) {
+                    if (user.getSupported().containsKey(partner.getId())) {
+                        user.getSupported().remove(partner.getId());
+                        core.getSerializer().getMongoUserSerializerManager().serialize(user, user.getId());
+                    }
+                }
                 deleteMongoDocument(partner.getId());
                 break;
             default:

@@ -41,8 +41,8 @@ dependencies {
     shadow 'org.mongodb:mongodb-driver:3.3.0'
     implementation 'com.github.xRaidersito.p-lib:bukkit-cmd:3e10f468d1'
     shadow 'com.github.xRaidersito.p-lib:bukkit-cmd:3e10f468d1'
-    implementation 'com.github.raaiider.p-lib:commons-storage:861d5f0886'
-    shadow 'com.github.raaiider.p-lib:commons-storage:861d5f0886'
+    implementation 'com.github.raaiider.p-lib:commons-storage:c67df04c4f'
+    shadow 'com.github.raaiider.p-lib:commons-storage:c67df04c4f'
     compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

@@ -36,6 +36,7 @@ import org.bukkit.Bukkit;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 
 public class LaruxSupportCore implements PluginCore {
@@ -53,6 +54,7 @@ public class LaruxSupportCore implements PluginCore {
     private CommandManager commandManager;
     private GuiHandler guiHandler;
     private PartnerHandler partnerHandler;
+    private SerializerProvider serializerInitializer;
 
     private MongoDatabaseCreator mongoDatabaseCreator;
 
@@ -136,6 +138,11 @@ public class LaruxSupportCore implements PluginCore {
     }
 
     @Override
+    public SerializerProvider getSerializer() {
+        return serializerInitializer;
+    }
+
+    @Override
     public StorageType getStorageType() {
         try {
             return StorageType.valueOf(config.getString("database.type"));
@@ -147,6 +154,51 @@ public class LaruxSupportCore implements PluginCore {
     @Override
     public PartnerHandler getPartnerHandler() {
         return partnerHandler;
+    }
+
+    @Override
+    public List<User> getAllUsersByMongo() {
+        try {
+            return EXECUTOR_SERVICE.submit(() -> {
+                MongoCollection<Document> collection = mongoDatabaseCreator.getCollection("partners");
+                List<String> fileNames = new ArrayList<>();
+                collection.find().forEach((Block<? super Document>) document -> {
+                    if (!getUserStorage().get().containsKey(document.get("id", String.class))) {
+                        fileNames.add(document.get("id", String.class));
+                    }
+                });
+                List<User> users = new ArrayList<>(getUserStorage().loadAll(fileNames.toArray(new String[0]), false));
+                users.addAll(getUserStorage().get().values());
+                return users;
+            }).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUsersByYaml() {
+        if (!new File(plugin.getDataFolder().getAbsolutePath() + "/users/").exists()) {
+            return null;
+        }
+        try {
+            return EXECUTOR_SERVICE.submit(() -> {
+                List<String> fileNames = new ArrayList<>();
+                for (File file : new File(plugin.getDataFolder().getAbsolutePath() + "/users/").listFiles()) {
+                    String fileName = Utils.removeFileExtension(file.getName());
+                    if (!getUserStorage().get().containsKey(fileName)) {
+                        fileNames.add(Utils.removeFileExtension(file.getName()));
+                    }
+                }
+                List<User> users = new ArrayList<>(getUserStorage().loadAll(fileNames.toArray(new String[0]), false));
+                users.addAll(getUserStorage().get().values());
+                return users;
+            }).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void initAutoSave() {
@@ -165,7 +217,7 @@ public class LaruxSupportCore implements PluginCore {
         if (getStorageType()==StorageType.MONGODB) {
             mongoDatabaseCreator = new MongoDatabaseCreator(this);
         }
-        SerializerProvider serializerInitializer = new SerializerProvider(this);
+        serializerInitializer = new SerializerProvider(this);
 
         MessageProvider messageProvider = new DefaultMessageProvider();
 
