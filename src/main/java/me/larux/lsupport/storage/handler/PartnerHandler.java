@@ -3,6 +3,7 @@ package me.larux.lsupport.storage.handler;
 import me.larux.lsupport.PluginCore;
 import me.larux.lsupport.storage.object.Partner;
 import me.larux.lsupport.storage.object.User;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -38,6 +39,10 @@ public class PartnerHandler {
         partner.setPartners(partner.getPartners() + 1);
         supporting.put(partner.getId(), supporting.containsKey(partner.getId()) ? supporting.get(partner.getId()) + 1 : 1);
 
+        if (core.getConfig().getBoolean("config.command-on-support.enabled")) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), core.getConfig().getString("config.command-on-support.command-to-execute")
+                    .replace("%name%", player.getName()));
+        }
         player.sendMessage(core.getLang().getString("messages.add.now-supporting")
                 .replace("%partner_name%", partner.getPlayerFromId().getName())
                 .replace("%times_supported%", String.valueOf(supporting.get(partner.getId()))));

@@ -3,5 +3,8 @@ database:
   mongo:
     uri: "mongodb://localhost"
 config:
+  command-on-support:
+    enabled: true
+    command-to-execute: "give %name% diamond 32"
   stop-supporting: false
-  max-supports-per-player: 3
+  max-supports-per-player: 1
