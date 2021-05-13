@@ -3,6 +3,9 @@ database:
   mongo:
     uri: "mongodb://localhost"
 config:
+  auto-save:
+    enabled: true
+    seconds: 900
   command-on-support:
     enabled: true
     command-to-execute: "give %name% diamond 32"

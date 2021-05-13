@@ -74,11 +74,14 @@ public class LaruxSupportCore implements PluginCore {
                 break;
             default:
         }
+        if (config.getBoolean("config.auto-save.enabled")) {
+            initAutoSave();
+        }
     }
 
     @Override
     public void disable() {
-        savePartners();
+        savePartners(true);
         saveUsers();
     }
 
@@ -146,6 +149,15 @@ public class LaruxSupportCore implements PluginCore {
         return partnerHandler;
     }
 
+    private void initAutoSave() {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin,
+                () -> {
+                    savePartners(false);
+                    initAutoSave();
+                },
+                config.getLong("config.auto-save.seconds")*20);
+    }
+
     private void initObjects() {
         config = new FileCreator(plugin, "config");
         lang = new FileCreator(plugin, "lang");
@@ -207,9 +219,9 @@ public class LaruxSupportCore implements PluginCore {
         Bukkit.getLogger().info("Loaded partners successfully!");
     }
 
-    private void savePartners() {
+    private void savePartners(boolean removeFromCache) {
         List<String> partners = new ArrayList<>(getStorage().get().keySet());
-        getStorage().saveAll(partners.toArray(new String[0]));
+        getStorage().saveAll(partners.toArray(new String[0]), removeFromCache);
     }
 
     private void saveUsers() {
