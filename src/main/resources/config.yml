@@ -1,5 +1,5 @@
 database:
-  type: YAML
+  type: YAML # YAML or MONGODB
   mongo:
     uri: "mongodb://localhost"
 config:
