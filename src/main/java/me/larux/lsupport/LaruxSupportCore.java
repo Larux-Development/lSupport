@@ -163,8 +163,9 @@ public class LaruxSupportCore implements PluginCore {
                 MongoCollection<Document> collection = mongoDatabaseCreator.getCollection("partners");
                 List<String> fileNames = new ArrayList<>();
                 collection.find().forEach((Block<? super Document>) document -> {
-                    if (!getUserStorage().get().containsKey(document.get("id", String.class))) {
-                        fileNames.add(document.get("id", String.class));
+                    String id = document.get("id", String.class);
+                    if (!getUserStorage().get().containsKey(id)) {
+                        fileNames.add(id);
                     }
                 });
                 List<User> users = new ArrayList<>(getUserStorage().loadAll(fileNames.toArray(new String[0]), false));

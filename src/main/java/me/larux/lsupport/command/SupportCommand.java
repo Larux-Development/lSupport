@@ -31,8 +31,7 @@ public class SupportCommand implements PLibCommand {
     @Command(name = "admin partner add", permission = "lsupport.admin")
     public void runAdminCommand(@Injected BukkitSender sender, String name) {
         CommandSender player = sender.getSender();
-        @SuppressWarnings("deprecation")
-		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         if (!offlinePlayer.hasPlayedBefore()) {
             player.sendMessage(core.getLang().getString("messages.admin.error-player-never-played"));
             return;
@@ -47,36 +46,19 @@ public class SupportCommand implements PLibCommand {
 
     @Command(name = "admin partner remove", permission = "lsupport.admin")
     public void runDeleteCommand(@Injected BukkitSender sender, String name) {
-        CommandSender player = sender.getSender();
-        @SuppressWarnings("deprecation")
+        CommandSender cmdSender = sender.getSender();
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
-            player.sendMessage(core.getLang().getString("messages.admin.error-deleting-partner"));
+            cmdSender.sendMessage(core.getLang().getString("messages.admin.error-deleting-partner"));
             return;
         }
         switch (core.getStorageType()) {
             case YAML:
-                for (User user : core.getAllUsersByYaml()) {
-                    if (user.getSupported().containsKey(partner.getId())) {
-                        user.getSupported().remove(partner.getId());
-                        core.getSerializer().getYamlUserSerializerManager().serialize(user, user.getId());
-                    }
-                }
-                File file = new File(core.getPlugin().getDataFolder().getAbsolutePath() + "/data/", partner.getId() + ".yml");
-                if (file.delete()) {
-                    core.getStorage().get().remove(partner.getId());
-                    player.sendMessage(core.getLang().getString("messages.admin.success-deleting-partner"));
-                }
+                removePartnerByYaml(cmdSender, partner);
                 break;
             case MONGODB:
-                for (User user : core.getAllUsersByMongo()) {
-                    if (user.getSupported().containsKey(partner.getId())) {
-                        user.getSupported().remove(partner.getId());
-                        core.getSerializer().getMongoUserSerializerManager().serialize(user, user.getId());
-                    }
-                }
-                deleteMongoDocument(partner.getId());
+                removePartnerByMongo(cmdSender, partner);
                 break;
             default:
         }
@@ -92,7 +74,6 @@ public class SupportCommand implements PLibCommand {
             return;
         }
         Player player = pSender.get();
-        @SuppressWarnings("deprecation")
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
@@ -112,7 +93,6 @@ public class SupportCommand implements PLibCommand {
             return;
         }
         Player player = pSender.get();
-        @SuppressWarnings("deprecation")
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
@@ -155,7 +135,6 @@ public class SupportCommand implements PLibCommand {
             return;
         }
         Player player = pSender.get();
-        @SuppressWarnings("deprecation")
 		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(name);
         Partner partner = core.getStorage().get().get(offlinePlayer.getUniqueId().toString());
         if (partner==null) {
@@ -213,10 +192,10 @@ public class SupportCommand implements PLibCommand {
     		if(sender.getSender().hasPermission("lsupport.admin")) {
                 Utils.helpMessage(sender.getSender());
     		}else {
-    			sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&6[&blSupport&6] &aby &cRaider &a& &ctheabdel572&a."));
-        		sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support &1- &2Opens the supporters GUI."));
-        		sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support add <partner> &1- &2Start supporting a partner."));
-        		sender.getSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a/support remove <partner> &1- &2Stop supporting a partner."));
+    			sender.getSender().sendMessage(Utils.colorize("&6[&blSupport&6] &aby &cRaider &a& &ctheabdel572&a."));
+        		sender.getSender().sendMessage(Utils.colorize("&a/support &1- &2Opens the supporters GUI."));
+        		sender.getSender().sendMessage(Utils.colorize("&a/support add <partner> &1- &2Start supporting a partner."));
+        		sender.getSender().sendMessage(Utils.colorize("&a/support remove <partner> &1- &2Stop supporting a partner."));
     		}
     	}else {
             Utils.helpMessage(sender.getSender());
@@ -233,6 +212,31 @@ public class SupportCommand implements PLibCommand {
             return;
         }
         new LaruxSupportMenu(core).openMenu(player.get());
+    }
+
+    private void removePartnerByMongo(CommandSender sender, Partner partner) {
+        for (User user : core.getAllUsersByMongo()) {
+            if (user.getSupported().containsKey(partner.getId())) {
+                user.getSupported().remove(partner.getId());
+                core.getSerializer().getMongoUserSerializerManager().serialize(user, user.getId());
+            }
+        }
+        deleteMongoDocument(partner.getId());
+        sender.sendMessage(core.getLang().getString("messages.admin.success-deleting-partner"));
+    }
+
+    private void removePartnerByYaml(CommandSender sender, Partner partner) {
+        for (User user : core.getAllUsersByYaml()) {
+            if (user.getSupported().containsKey(partner.getId())) {
+                user.getSupported().remove(partner.getId());
+                core.getSerializer().getYamlUserSerializerManager().serialize(user, user.getId());
+            }
+        }
+        File file = new File(core.getPlugin().getDataFolder().getAbsolutePath() + "/data/", partner.getId() + ".yml");
+        if (file.delete()) {
+            core.getStorage().get().remove(partner.getId());
+            sender.sendMessage(core.getLang().getString("messages.admin.success-deleting-partner"));
+        }
     }
 
     private void deleteMongoDocument(String id) {
